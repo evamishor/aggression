@@ -1,0 +1,119 @@
+%% intialize1
+
+%clear all % in case i want to get out of this mode
+Initialize_PSAP
+%%
+
+
+%% part 1 PSAP
+
+%image of money earnings for 18 seconds (i can do 91 presses in 18 secs)
+% choose option a or b
+% randomize subtraction
+amount = 5;
+[xCenter, yCenter] = RectCenter(windowRect);
+position = [0 0 xCenter yCenter*1.5];
+Screen('DrawText', window, '5', position(3),position(2)+200)%, [1 0 0]);
+Screen('Flip', window, 0, 1);
+%square x
+% Get the centre coordinate of the window
+%coor_X = [xCenter/4 xCenter/2; xCenter+xCenter/4 xCenter+xCenter/2];
+% Make a base Rect of 200 by 200 pixels
+frameSize = 200;
+x1 = 200;
+baseRect = [x1 yCenter x1+frameSize yCenter+frameSize];
+baseRect2 = baseRect+[xCenter 0 xCenter 0];
+counter=0;
+
+startTime = GetSecs;
+State.monetary.deadline = 18;
+State.revenge.deadline = 2;
+State.none.deadline = 18;
+
+sessionLength = 4*60;
+full = 20;
+waitTime = 4;
+%perturbe every 60-120 secs
+
+while GetSecs < startTime+sessionLength
+    % + slide
+    
+    showImageNwait( CrossImage, window, windowRect, waitTime)
+    Screen('Flip',window);
+    
+    
+    Screen('FrameRect', window, [0 0 0], baseRect ); %frame for square
+    Screen('FrameRect', window, [0 0 0], baseRect2 ); %frame for square 2
+    keyPressed = true;
+    state = 'none';% none|monetary|revenge
+    Screen('Flip',window);
+    
+    
+    
+    % instruction
+    
+    % for 12 minutes
+    
+    
+    %if GetSecs < startTime+deadline && keyPressed == true  %???
+    [secs,keyCode,deltaSecs] = KbWait;
+    startTime = GetSecs;
+    while KbCheck
+        %KbName(keyCode)
+        if strcmp(KbName(keyCode),'1!') && (strcmp(state,'none') || strcmp(state,'monetary'))
+            %deadline = monetaryDeadline;
+            counter=counter+1;
+            Screen('FrameRect', window, [0 0 0], baseRect ); %frame for square
+            Screen('FrameRect', window, [0 0 0], baseRect2 ); %frame for square2
+            Screen('FillRect', window, [1 0 0], baseRect+[0 frameSize-counter*10 0 0] ) %fill dependent on the press;
+            Screen('Flip',window);
+            if counter>=full %start over when counter is full
+                counter=0;
+            end
+            state = 'monetary';
+            
+            if GetSecs > startTime+State.(state).deadline
+                break
+            end
+            
+        elseif strcmp(KbName(keyCode),'2@') && (strcmp(state,'none') || strcmp(state,'revenge'))
+            %deadline=revengeDeadline;
+            counter=counter+5;
+            Screen('FrameRect', window, [0 0 0], baseRect ); %frame for square
+            Screen('FrameRect', window, [0 0 0], baseRect2 ); %frame for square 2
+            Screen('FillRect', window, [1 0 0], baseRect2+[0 frameSize-counter*10 0 0] ) %fill dependent on the press;
+            Screen('Flip',window);
+            if counter>=full %start over when counter is full
+                counter=0;
+            end
+            if GetSecs > startTime+State.(state).deadline
+                break
+            end
+            
+            state = 'revenge';
+        else
+            keyPressed = false;
+        end
+        
+        
+        pause(0.5);
+    end
+    counter=0;
+end
+%end
+
+clear counter;
+clear MEX %flushEvents; % or
+%end
+
+
+%% data
+%save data
+%what data do i save?
+%presses, time of presses,time of provocations, money count.
+
+sca
+%% movie 7 minutes - or scan?
+
+%% part 2 PSAP
+%psap again

@@ -1,0 +1,34 @@
+%% finalize
+fprintf('done: %s',mat2str(done));
+t.stop;
+%% close connection
+if done
+    showImageNwait( CrossImage, window, windowRect, 4)
+    showImageNwait( endImage, window, windowRect, 60) %show finishing slide
+    records.Properties.VariableNames = {'startTime' 'amount' 'state','round','EndTime'};
+    
+    writetable(records,sprintf('%s.csv',dataDirectory),'Delimiter',';')
+    fprintf('close and exit\n');
+    if (hardware)
+        fclose(fid1);
+        t.stop;
+        delete(t);
+        clear t;
+    end
+    if ~isempty(olfactometerIP)
+    [time, echo] = olfactometer_web_command('Abort', olfactometerIP);
+    end
+    clear records
+    delete output.mat
+    clear all
+    close all
+else
+    %save for future reloads
+    records.Properties.VariableNames = {'startTime', 'amount', 'state','round','endTime'};
+    save ('records.mat', 'records');
+    save('temp_var.mat','ii','run_num','amount','index','endtime','monetary_idx');                                                                          29
+    
+    TriggerLabChart('early_termination',olfactometerIP,experimentStart);
+   
+end
+sca

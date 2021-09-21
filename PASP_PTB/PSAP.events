@@ -1,0 +1,43 @@
+[ExperimentInfo]
+Experiment Name = "PSAP"
+Experimenter = "Eva"
+Subject = ""
+Path for Data Files = "/C/Users/worg/Box Sync/lab-Backup/Manget-Olfactometer/PSAP"
+
+[OdorsInCanisters]
+Canister 1 = "Clean"
+Canister 2 = "Hex1"
+Canister 3 = "Control1"
+Canister 4 = "Hex2"
+Canister 5 = "Control2"
+Canister 6 = ""
+
+[Event0]
+MFC Flow = 2.000000
+Odor Number = 2
+Odor Duration = 10.000000
+Event Name = "Hex1"
+
+[Event1]
+MFC Flow = 2.000000
+Odor Number = 4
+Odor Duration = 10.000000
+Event Name = "Hex2"
+
+[Event2]
+MFC Flow = 2.000000
+Odor Number = 3
+Odor Duration = 10.000000
+Event Name = "Control1"
+
+[Event3]
+MFC Flow = 2.000000
+Odor Number = 5
+Odor Duration = 10.000000
+Event Name = "Control2"
+
+[Event4]
+MFC Flow = 2.000000
+Odor Number = 1
+Odor Duration = 10.000000
+Event Name = "Blank"

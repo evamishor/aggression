@@ -1,0 +1,84 @@
+clear all
+%%
+WD = '/Volumes/sobel/evag/PSAP_fMRI/ROIS/';
+cd(WD)
+WD_files = dir; %all files
+WD_files = {WD_files([WD_files.isdir]).name}; %just folders
+WD_files = WD_files(~contains(WD_files,'.')); %just undotted folder
+WD_events_timing = dir('/Users/eva/Box/PSAP_PTB/data_to_analyze/fixed_events_TRs/*.csv');
+WD_events_timing = {WD_events_timing.name};
+WD_events_timing =string(WD_events_timing);
+
+colors = [[255,182,193]/255;[255,182,193]/255;...
+    [135,206,250]/255;[135,206,250]/255]; %light pink, light blue
+yellowC = [0.9290 0.6940 0.1250];
+greyC = [122 122 122]/255;
+TRs = {'1st_TR', '2nd_TR', '3rd_TR','4th_TR'};
+
+rois = dir('*.nii.gz'); %getting the roi's
+rois(contains({rois.name}, '._'))=[];
+
+%number_of_ROIs = 16;
+for roisLoop = 1:length(rois)
+    C = strsplit(rois(roisLoop).name,'.');
+    ROI{roisLoop} = C{1};
+end
+
+ROIdujour = ROI{15} %which ROI to look at
+%%
+subjLoop_vec = 1:length(WD_files);
+subjLoop_vec
+for subjLoop = 1:length(WD_files)
+    subject = WD_files{subjLoop};
+    subplot(10,5,subjLoop)
+    time_file_name = WD_events_timing(contains(WD_events_timing,subject,'IgnoreCase',true)); %find events log file
+    if ~isempty(time_file_name)
+        time_table = readtable(sprintf('/Users/eva/Box/PSAP_PTB/data_to_analyze/fixed_events_TRs/%s',time_file_name)); %load events log file
+        
+        %eventypes = {'monetary','provocation','revenge'};
+        eventypes = {'monetary'};
+        ROIresponse(subjLoop).SubjectID = subject;
+        for eachEvant = 1:length(eventypes) %each type of event
+            
+            for runum=1:4
+                TR1_ind = find(string(time_table{:,3})==TRs{runum}); %find first TR
+                TRs_times = time_table.(1)-time_table{TR1_ind,1}; %time compared to 1st TR of run, in secs
+                
+                runname = string(sprintf('run%d',runum));
+                
+                subject_ROI = readtable(sprintf('%s%s/%s_run%d.txt', WD, subject, ROIdujour, runum)); %load correct file
+                subject_ROI = subject_ROI{:,1};
+                
+                ROIresponse(subjLoop).(eventypes{eachEvant}).TRs_times.(runname) = TRs_times(string(time_table{:,3})==eventypes{eachEvant} & time_table{:,4}==runum);
+                %%
+                for ii = 1:length(ROIresponse(subjLoop).(eventypes{eachEvant}).TRs_times.(runname))
+                    TR_event = floor(ROIresponse(subjLoop).(eventypes{eachEvant}).TRs_times.(runname)(ii)/2); %gets the TR of the event
+                    hold on
+                    try
+                        roi_activity(:,ii) = subject_ROI(TR_event-4:TR_event+10);
+                    catch
+                        roi_activity(:,ii) = [subject_ROI(TR_event-4:length(subject_ROI)) ;NaN(length(roi_activity)-length(subject_ROI(TR_event-4:length(subject_ROI))),1)]; %in case it's more than the last TR
+                    end
+                    roi_activity(:,ii) = roi_activity(:,ii)./roi_activity(1,ii);
+                    plot([-4:10],smooth(roi_activity(:,ii)),':','Color', colors(runum,:))
+                    xticks([0])
+                end
+                plot([-4:10],smooth(nanmean(roi_activity,2)),'Color',greyC,'LineWidth',2.5)
+
+            end
+            clear subject_ROI;
+            xticks([0]);                     
+            title(subject)
+            clear roi_activity
+
+        end
+    end
+    
+end
+%sgtitle(sprintf('%s response for %s events', ROIdujour, eventypes{eachEvant}))
+
+%% plot raw data
+
+% subject_ROI = readtable(sprintf('%s%s/%s_run%d.txt', WD, subject, ROIdujour, runum)); %load correct file
+% subject_ROI = subject_ROI{:,1};
+% plot(subject_ROI)

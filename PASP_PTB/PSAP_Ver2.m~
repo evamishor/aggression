@@ -1,0 +1,228 @@
+
+clear all
+close all
+%% globals
+global one two subjectID leftOK rightOK state sq_thresh rel_thresh  ;
+one = false;
+two = false;
+leftOK = true;
+rightOK = true;
+sq_thresh = 0.05;
+rel_thresh = -0.05;
+subjectID = '';
+
+
+%% init
+%clear all % in case i want to get out of this mode
+fprintf('Initializing...\n');
+% modes: 
+% short - only one PSAP session, no presses. 
+% long - one PSAP session, with presses. 
+% double_short - two PSAP sessions, no presses, no movie. 
+% double_long - two PSAP sessions, with presses, no movie. 
+% all - presses+ two PSAP sessions with movie. 
+% movie -  only movie. 
+% short_NL - short without labview. 
+% long_NL - long without labview. 
+% double_short_NL - double short without labview
+% double_long_NL - double long without labview.
+% all_NL - all without labview
+% movie_NL - movie without labview.
+mode = 'short_NL';
+hardware = true;
+if (contains(mode,'NL'))
+    hardware = false;
+    t = 'nohardware';
+end
+%% 
+Initialize_PSAP_Ver2
+
+HideCursor
+%% part 1 PSAP - initialize variables
+% randomize subtraction
+rng = num2str(subject(2:end))*blockN;%what is the numbe of events?
+provocation_vec = randperm(length(face_pics));
+%wait for TR before each run!!
+%4 runs, 8 minutes each.
+
+fprintf('Initializing variables...\n');
+
+
+waitTime = 1.2; textSize = 150;
+xPos = windowRect(3)*.5; yPos = windowRect(4)*.73;
+Screen('TextColor', window, green);
+Screen('TextSize', window, 100);
+
+records{ii,1} = experimentStart;
+records{ii,2} = NaN;
+records{ii,3}= string('experiment start');
+records{ii,4}= run_num;
+records{ii,5}= NaN;
+
+ii=ii+1; save ('records.mat', 'records');
+
+% get all presses
+leftOK = false;
+rightOK = false;
+stateArr = {'nopress','strongR','strongL','lightR','lightL','strongR','strongL','lightR','lightL','strongR','strongL','lightR','lightL'};
+imgArr = {'no_press.png','strong_press_right.png','strong_press_left.png','light_press_right.png','light_press_left.png'...
+    'strong_press_right.png','strong_press_left.png','light_press_right.png','light_press_left.png'...
+    'strong_press_right.png','strong_press_left.png','light_press_right.png','light_press_left.png'};
+
+
+
+%% Get squeeze strengths
+showImageNwait( CrossImage, window, windowRect, 4) ;%cross image
+
+if contains(mode,'long')||contains(mode,'double_long')||contains(mode,'all')
+    fprintf('preparing for squeeze strengths...\n');
+    records{ii,1} = GetSecs-experimentStart;
+    records{ii,2} = NaN;
+    records{ii,3}= string('calibration');
+    while index<=length(stateArr)
+        state = stateArr{index};
+        
+        showImageNwait( CrossImage, window, windowRect, 4) %cross image
+        showImageNwait( beginImage, window, windowRect, 4) %begin image
+        
+        records  = getSqueeze(records, ii,state, imgArr{index},window,windowRect,textSize,xPos,yPos,waitTime,experimentStart);
+        ii=ii+1; save ('records.mat', 'records');
+        showImageNwait( CrossImage, window, windowRect, 4) %cross image
+        index = index+1;
+        
+        %*%*%*%*%*%*%%*%*%*%*%*%*%
+        if KbQueueCheck
+            finalize
+            disp('Escape was pressed... finalizing...')
+            break
+        end
+        %*%*%*%*%*%*%%*%*%*%*%*%*%
+        
+        if (strcmp(state,'lightL')) && ~leftOK
+            showImageNwait( PressAgainImage, window, windowRect, 4)
+            index = index - 1;
+        end
+        if (strcmp(state,'lightR')) && ~rightOK
+            showImageNwait( PressAgainImage, window, windowRect, 4)
+            index = index - 1;
+        end
+    end
+end
+
+%% round 1 PSAP
+run_num = 1;
+if ~contains(mode,'movie')
+    fprintf('round 1...\n');
+    
+    % instructions
+    if ~exist('temp_var.mat')==2
+    showImageNspaceG(mode,'instructions1', window, windowRect, subject)%file should be named instructions1_w.tiff
+    showImageNspaceG(mode,'instructions2', window, windowRect, subject)
+    showImageNspaceG(mode,'instructions3', window, windowRect, subject)
+    end
+    % randomize subtraction
+   
+    showImageNwait( 'wait.png', window, windowRect, 3.6)
+    showImageNwait( 'condition.png', window, windowRect, 4)
+    showImageNwait( 'begin_now.png', window, windowRect, 4)
+
+    
+    [xCenter, yCenter] = RectCenter(windowRect);
+    position = [0 0 xCenter yCenter*2];
+  
+    % Get the centre coordinate of the window
+    % Make a base Rect of 200 by 200 pixels
+    frameSize = 200;
+    x1 = xCenter/2-frameSize/1.5;
+    baseRect = [x1 yCenter-300 x1+frameSize yCenter+frameSize/2];
+    baseRect2 = baseRect+[xCenter 0 xCenter 0];
+    counter=0;
+    %% 
+    startTime = GetSecs;
+    State.monetary.deadline = 10; %10 secs per round
+    State.revenge.deadline = 4; %4 secs per 
+    State.none.deadline = 12;
+    full = 20;
+    State.monetary.steptime = State.monetary.deadline/(2.5*full);
+    State.none.steptime = State.monetary.steptime;
+    State.revenge.steptime = State.revenge.deadline/full;
+    
+    
+    %GetMRI_Trigger_WaitFunction
+    PSAP_Session_Ver2
+    ii=ii+1;
+    run_num = 2;
+   
+    %% pause between runs   
+showImageNspace(CrossImage, window, windowRect )   
+    %%
+    %GetMRI_Trigger_WaitFunction
+    PSAP_Session_Ver2
+    records{ii-1,5} = endtime;
+    run_num = 3;
+end
+
+%% movie 7 minutes
+%trigger to labchart
+if contains(mode,'movie') || contains(mode,'all')
+    fprintf('movie\n');
+    state = 'movie';
+    showImageNwait('now_movie.png', window, windowRect,10) %wait for 10 secs before movie
+    
+    fprintf('sentstate\n');
+    % Open movie file:
+    moviename = [cd '/TV for Cats - Birds on Bluebell Log.mp4'];
+    
+    waitUntilEventFunction = [];
+    %olfactometerIP = '';
+    isKeyboardPressed = DisplayMovie(window, moviename, waitUntilEventFunction, olfactometerIP);
+    
+    fprintf('open movie\n');
+    
+end
+
+%% part 3 PSAP
+if contains(mode,'double_short') || contains(mode,'double_long') || contains(mode,'all')
+    fprintf('round 2\n');
+    experimentStart = GetSecs;
+    %psap again
+    %GetMRI_Trigger_WaitFunction
+    PSAP_Session_Ver2
+    records{ii-1,5} = endtime;
+    run_num = 4;
+end
+showImageNspace( CrossImage, window, windowRect )
+%%part 4 PSAP
+%GetMRI_Trigger_WaitFunction
+PSAP_Session_Ver2
+records{ii-1,5} = endtime;
+showImageNwait('end.png', window, windowRect,60)
+
+done = true;
+%% 
+finalize
+%%
+
+function records =  getSqueeze(records, ii,stateName, filename,window,windowRect,textSize,xPos,yPos,waitTime,experimentStart)
+state = stateName;
+
+showImageNwait( filename, window, windowRect, 4)
+
+for ii=1:3
+    showImageTextNwait( filename, window, windowRect, num2str(ii), textSize, xPos, yPos, waitTime)
+    
+end
+records{ii,1} = GetSecs-experimentStart;
+records{ii,2} = NaN;
+records{ii,3}= string(state);
+records{ii,4}= NaN;
+records{ii,5}= NaN;
+
+
+end
+% fires when main function terminates
+%     function cleanMeUp()
+%         finalize
+%         disp('Clean me up function has been executed');
+%     end
+

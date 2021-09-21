@@ -1,0 +1,128 @@
+%% script PSAP_Session
+
+% Runs one PSAP session of mometary and revenge state
+sessionLength = 60%120;%4*60;
+waitTime = 4;
+%perturbe every 60-120 secs
+state = 'none';
+
+one = false;
+two = false;
+stepsize = 20;
+times = 0;
+earning = 3; %how much money you earn with every full counter
+
+while GetSecs < startTime+sessionLength
+    fprintf('PSAP iteration\n');
+    if ii>1
+    records{ii-1,5} = endtime;
+    end
+    showImageNwait( CrossImage, window, windowRect, waitTime);
+    centerize_amount = 50*(length(num2str(amount)));%-1); %centralize the amount
+    
+    %*%*%*%*%*%*%%*%*%*%*%*%*%
+    if KbQueueCheck
+        disp('Escape was pressed... finalizing...')
+        finalize
+        
+    end
+    %*%*%*%*%*%*%%*%*%*%*%*%*%
+    
+ 
+    Screen('Flip',window);
+    Screen('TextSize', window, textSize);
+    Screen('DrawText', window, num2str(amount), position(3)-centerize_amount,position(2)); 
+    Screen('FrameRect', window, [0 0 0], baseRect ); %frame for square
+    Screen('FrameRect', window, [0 0 0], baseRect2 ); %frame for square 2
+    Screen('Flip',window);
+    
+    sessionTime = GetSecs;
+    
+    %%%%signal to lab chart%%%%
+    TriggerLabChart('monetary',olfactometerIP)
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+    if (~hardware)
+        [secs,keyCode,deltaSecs] = KbWait([],[],GetSecs+4);
+    else
+        keyCode = 12;%'Clear', or in other words, not relevant.
+    end
+    while one || two || GetSecs-sessionTime<4 || KbCheck
+        %fprintf('entering cases...\n');
+        if one &&two && (strcmp(state,'none') || strcmp(state,'monetary')) ||(one &&two && (strcmp(state,'revenge') && GetSecs-sessionTime<2)) || strcmp(KbName(keyCode),'1!') %squeeze both
+            %fprintf('entering monetary case...\n');
+            
+            counter=counter+1;
+            Screen('TextSize', window, textSize);
+            Screen('DrawText', window, num2str(amount), position(3)-centerize_amount,position(2));
+            Screen('FrameRect', window, [0 0 0], baseRect ); %frame for square
+            Screen('FrameRect', window, [0 0 0], baseRect2 ); %frame for square2
+            Screen('FillRect', window, [1 0 0], baseRect+[0 frameSize+200-counter*stepsize 0 0] ) %fill dependent on the press;
+            Screen('Flip',window);
+            if counter>=full %start over when counter is full
+                counter=0;
+                amount=amount+earning;
+                times = times+1;
+                if (times==2)
+                    break
+                end
+            end
+            if mon
+            state = 'monetary';
+            monetary_idx =  monetary_idx+1;
+            %if (~strcmp(prevstate, state))
+            %    fprintf('prevstate: %s. new state: %s. sending state...\n',prevstate,state);
+            %    sendState(hardware,t,state);
+            %end
+            
+            if GetSecs > sessionTime+State.(state).deadline
+                fprintf('breaking one and two\n');
+                break
+            end
+        elseif xor(one,two) && (strcmp(state,'none') || strcmp(state,'revenge')) || (xor(one,two) &&strcmp(state,'monetary') && GetSecs-sessionTime<2) || strcmp(KbName(keyCode),'2@')%only one, not both
+            
+            %fprintf('entering revenge case...\n');
+            counter=counter+2;
+            Screen('TextSize', window, textSize);
+            Screen('DrawText', window, num2str(amount), position(3)-centerize_amount,position(2));
+            Screen('FrameRect', window, [0 0 0], baseRect ); %frame for square
+            Screen('FrameRect', window, [0 0 0], baseRect2 ); %frame for square 2
+            Screen('FillRect', window, [1 0 0], baseRect2+[0 frameSize+200-counter*stepsize 0 0] ) %fill dependent on the press;
+            Screen('Flip',window);
+            
+            state = 'revenge';
+            
+            if counter>=full %start over when counter is full
+                counter=0;
+                break;
+            end
+            if GetSecs > sessionTime+State.(state).deadline
+                fprintf('breaking one or two %f\n',GetSecs-sessionTime);
+                break
+            end
+            
+            
+        end
+        if GetSecs > sessionTime+State.(state).deadline
+                fprintf('breaking external %f\n',GetSecs-sessionTime);
+                break
+        end
+        
+        pause(State.(state).steptime);
+        times = 0;
+    end
+    %reset
+    counter=0;
+    fprintf('state = %s\n',state);
+    records(ii,:) = WriteRecoeds(experimentStart,sessionTime,run_num, amount, state);
+    ii=ii+1;
+    endtime = TriggerLabChart('end_event',olfactometerIP);
+    state = 'none';
+    one = false;
+    two = false;
+end
+%end
+
+
+save ('records.mat', 'records');
+clear counter;

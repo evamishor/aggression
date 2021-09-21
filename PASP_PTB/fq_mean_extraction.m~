@@ -1,0 +1,428 @@
+clear all
+%% extract data
+%addpath('/Users/eva/Downloads') %where ParseResultsHtml lies
+addpath('/Users/eva/Box/PSAP_PTB/PSAP_PTB_exp') %where ParseResultsHtml lies
+
+%get genders
+T = readtable('/Users/eva/Box/PSAP_PTB/PSAP_GeneralData.xlsx');
+T1 = [T.(2) T.(3)];%leave only name and gender
+T1(1,1) = {'MM603'};
+clear T;
+
+rois = dir('/Volumes/sobel/evag/PSAP_fMRI/ROIs/*.nii.gz'); %getting the roi's
+rois(contains({rois.name}, '._'))=[];
+number_of_ROIs = length(rois);
+
+genderColors = [[197 35 39]/255;...%women, blue
+    [0 98 169]/255];%men, red 
+greyC = [237 237 237]/255;
+
+for roisLoop = 1:number_of_ROIs %number of ROIs
+    C = strsplit(rois(roisLoop).name,'.');
+    ROI{roisLoop} = C{1};
+end
+%%
+ROI_vec = [2 4 15 16 17]; %(ROI)%1:length
+for ROILoop = ROI_vec
+    ROIdujour = ROI{ROILoop} %which ROI to look at
+    if ROILoop==15 | ROILoop==17
+    query_files = dir(sprintf('/Volumes/sobel/evag/PSAP_fMRI/second_level/Visual_events_model_noTRskip/*.gfeat/cope2.feat/fq_%s/report.html',ROIdujour));
+    else
+    query_files = dir(sprintf('/Volumes/sobel/evag/PSAP_fMRI/second_level/PPI_Provocation_angular/*.gfeat/cope1.feat/fq_%s/report.html',ROIdujour));
+    end
+    for query_files_loop = 1:length(query_files)
+        ROI_fq_means(query_files_loop).subjectID = GetSubjID(query_files(query_files_loop).folder);%get subjID
+        %ROI_fq_means(query_files_loop).(ROIdujour)
+        
+        filename = [query_files(query_files_loop).folder '/' query_files(query_files_loop).name];
+        filename = string(filename);
+        
+        ROI_fq_means(query_files_loop).(ROIdujour).Means = ParseResultsHtml(filename);
+    end
+    
+    %% plot
+    measure = 'MeanValues';%'percent90Values';%'maxValues';%
+    sz = 100;
+    figure
+    hold on
+    W_mean_HEX = NaN(49,1);W_mean_ctrl = NaN(49,1); M_mean_HEX = NaN(49,1); M_mean_ctrl = NaN(49,1);
+    
+    for ii = 1:length(ROI_fq_means)
+        
+        %detecting gender and coloe
+        Gcolor_logical = T1{find(contains(T1(:,1),ROI_fq_means(ii).subjectID, 'IgnoreCase',true)),2}=='m';
+        Gcolor_logical = Gcolor_logical+1; %men = 2 women = 1
+        Gcolor = genderColors(Gcolor_logical,:);
+        %plot
+        scatter(ROI_fq_means(ii).(ROIdujour).Means.MeanValues(1),ROI_fq_means(ii).(ROIdujour).Means.(measure)(2),sz,Gcolor,'filled','MarkerFaceAlpha',0.8, 'MarkerEdgeColor', 'w')
+        %text(ROI_fq_means(ii).Means.MeanValues(1),ROI_fq_means(ii).Means.MeanValues(2),ROI_fq_means(ii).subjectID,'FontSize',8)
+        all(ii) = max(abs(ROI_fq_means(ii).(ROIdujour).Means.(measure)));
+        if Gcolor_logical==1
+            W_mean_HEX(ii,1) = nanmean(ROI_fq_means(ii).(ROIdujour).Means.(measure)(2));
+            W_mean_ctrl(ii,1) = nanmean(ROI_fq_means(ii).(ROIdujour).Means.(measure)(1));
+        elseif Gcolor_logical==2
+            M_mean_HEX(ii,1) = nanmean(ROI_fq_means(ii).(ROIdujour).Means.(measure)(2));
+            M_mean_ctrl(ii,1) = nanmean(ROI_fq_means(ii).(ROIdujour).Means.(measure)(1));
+        end
+    end
+    maxall = max(all);
+    maxall = 1.1*abs(maxall);
+    maxall = [-maxall maxall];
+    title(sprintf('%s activation for provocation in %s',measure, ROIdujour))
+    xlabel('Control');ylabel('HEX')
+    xlim(maxall); ylim(maxall);
+    plot(maxall,maxall,':k')
+    
+    roi_mean = [W_mean_ctrl; W_mean_HEX;M_mean_ctrl; M_mean_HEX];
+    odor = [repmat(string('ctrl'), size(W_mean_ctrl));repmat(string('HEX'), size(W_mean_ctrl));repmat(string('ctrl'), size(W_mean_ctrl));repmat(string('HEX'), size(W_mean_ctrl))];
+    gender = [repmat("w", size(W_mean_ctrl)); repmat("w", size(W_mean_ctrl)); repmat("m", size(W_mean_ctrl)); repmat("m", size(W_mean_ctrl))];
+    odor(isnan(roi_mean)) = [];
+    gender(isnan(roi_mean)) = [];
+    roi_mean(isnan(roi_mean)) = [];
+    [p.(ROIdujour),tbl.(ROIdujour),stats.(ROIdujour)] = anovan(roi_mean, {odor, gender},'model','interaction');
+    fprintf('ROI: %s Gender: w, Odor: HEX, mean: %0.2f, std: %0.2f\n',ROIdujour, nanmean(roi_mean(odor=="HEX" & gender=="w")), nanstd(roi_mean(odor=="HEX" & gender=="w")))
+    fprintf('ROI: %s Gender: w, Odor: Ctrl, mean: %0.2f, std: %0.2f\n',ROIdujour, nanmean(roi_mean(odor=="ctrl" & gender=="w")), nanstd(roi_mean(odor=="ctrl" & gender=="w")))
+    fprintf('ROI: %s Gender: m, Odor: HEX, mean: %0.2f, std: %0.2f\n',ROIdujour, nanmean(roi_mean(odor=="HEX" & gender=="m")), nanstd(roi_mean(odor=="HEX" & gender=="m")))
+    fprintf('ROI: %s Gender: m, Odor: Ctrl, mean: %0.2f, std: %0.2f\n',ROIdujour, nanmean(roi_mean(odor=="ctrl" & gender=="m")), nanstd(odor=="ctrl" & gender=="m"))
+
+    stat_str = sprintf('odor p=%1.4f, gender p=%1.4f, interaction p=%1.4f',tbl.(ROIdujour){2,7}, tbl.(ROIdujour){3,7}, tbl.(ROIdujour){4,7});
+    text(min(maxall), min(maxall), stat_str);
+    
+    
+    axes('Position',[.7 .7 .2 .2])
+    box off
+    activation_means = [nanmean(W_mean_ctrl),nanmean(W_mean_HEX);nanmean(M_mean_ctrl), nanmean(M_mean_HEX)];
+    activation_SE = [nanstd(W_mean_ctrl),nanstd(W_mean_HEX);nanstd(M_mean_ctrl), nanstd(M_mean_HEX)];
+
+    bar([0.99, 1.05], activation_means(1,:), 0.4, 'FaceColor', [genderColors(1,:)], 'EdgeColor','none'); hold on
+    bar([1.2, 1.26], activation_means(2,:), 0.4, 'FaceColor', [genderColors(2,:)], 'EdgeColor','none')
+    
+    errorbar([0.99, 1.05], activation_means(1,:), activation_SE(1,:), 'color', greyC, 'CapSize', 0, 'LineWidth', 1)
+    errorbar([1.2, 1.26], activation_means(2,:), activation_SE(2,:),
+    
+    xticks([0.99, 1.05 1.2, 1.26])
+    xticklabels({'W Control', 'W HEX','M Control', 'M HEX'})
+    xtickangle(45)
+%     figname = sprintf('/Users/eva/Box/PSAP_PTB/ROI_figs/PPI/%s',ROIdujour);
+%     print(figname, '-dpng')%, '-d300')
+    clear W_mean_ctrl; clear W_mean_HEX; clear M_mean_ctrl; clear M_mean_HEX; clear roi_mean;
+    
+end
+
+%% correlation
+T_behavior = readtable('/Users/eva/Box/PSAP_PTB/PSAP_GeneralData.xlsx', 'Sheet', 'OnlyBehavior');
+T_behavior.subjectID{3} = 'm_aa989'; T_behavior.subjectID{11} = 'm_dd711';T_behavior.subjectID{9} = 'm_fl993'; %manual correction
+t_corr = T_behavior(:,1:8);
+fields = fieldnames(ROI_fq_means);
+fields = fields(2:end);
+whereto = 0;
+% for ROI_loop = 1:16
+%     ROIdujour = char(fields(ROI_loop));
+%     whereto = whereto+1;
+%     newTable(:,whereto) = table(nan(size(T_behavior,1),1),'VariableNames', {ROIdujour});
+%     whereto = whereto+1;
+%     ROIdujour_HEX = sprintf('%s_HEX', ROIdujour);
+%     newTable(:,whereto) = table(nan(size(T_behavior,1),1),'VariableNames', {ROIdujour_HEX});
+% end
+VarNames = {};
+
+for subj_loop = 1:49
+    subj = T_behavior.subjectID{subj_loop};
+    subj = subj((end-4):end)
+    subj_idx = find(contains({ROI_fq_means.subjectID}, subj, 'IgnoreCase',true));
+    whereto = 9;
+    for ROI_loop = 1:length(ROI_vec)%%1:16
+        ROIdujour = char(fields(ROI_loop));
+        t_corr{subj_loop,whereto} = ROI_fq_means(subj_idx).(ROIdujour).Means.MeanValues(1);
+        t_corr{subj_loop,whereto+1} = ROI_fq_means(subj_idx).(ROIdujour).Means.MeanValues(2);
+        whereto = whereto+2;
+    end
+end
+for ROI_loop = 1:length(ROI_vec)
+        ROIdujour = char(fields(ROI_loop));
+        ROIdujour_HEX = sprintf('%s_HEX', ROIdujour);
+        VarNames = [VarNames, ROIdujour, ROIdujour_HEX];
+end
+t_corr.Properties.VariableNames(9:end) = VarNames;
+t_corr_mat = t_corr{:,[2:8 10:end]};
+c = corr(t_corr_mat, 'rows', 'pairwise');
+
+figure
+c(isnan(c)) =0;
+imagesc(c); xticks(1:size(t_corr_mat,2))
+xticklabels(t_corr.Properties.VariableNames([2:8 10:end]));xtickangle(45)
+yticks(1:size(t_corr,2))
+yticklabels(t_corr.Properties.VariableNames([2:8 10:end]));%ytickangle(45)
+colormap jet
+colorbar('Ticks',[-1,-.5,0,0.5,1])
+
+figure
+[~, idx_new] = order_according_to_rows_corr(t_corr_mat', 0.8);
+C2 = c(idx_new,idx_new);
+idx_new = idx_new +1;
+idx_new(idx_new>8) = idx_new(idx_new>8)+1;
+imagesc(C2)
+xticklabels(t_corr.Properties.VariableNames(idx_new));xtickangle(45)
+yticks(1:size(t_corr,2))
+yticklabels(t_corr.Properties.VariableNames(idx_new));%ytickangle(45)
+colormap jet
+colorbar('Ticks',[-1,-.5,0,0.5,1])
+
+
+%%
+                               % just some SPACE
+
+
+
+
+%% classify
+for ii = 1:length(t_corr.HEXAggressive)
+    if t_corr.ratio(ii)>t_corr.ratio_1(ii)
+        categorical_HEX(ii,1)  = 1;
+    elseif t_corr.ratio(ii)<t_corr.ratio_1(ii)
+        categorical_HEX(ii,1)  = -1;
+    elseif t_corr.ratio(ii)==t_corr.ratio_1(ii)
+        categorical_HEX(ii,1)  = 0;
+    end
+end
+genders = [repmat('m', [25,1]); repmat('w', [24,1])];
+genders_logical = [genders=='w'];
+%%
+%A = [t_corr.controlAggressive-t_corr.HEXAggressive t_corr.temporalPole-t_corr.temporalPole_HEX t_corr.angularProvbHEXctrl-t_corr.angularProvbHEXctrl_HEX];
+%A = [t_corr.ratio_1-t_corr.ratio t_corr.temporalPole-t_corr.temporalPole_HEX t_corr.angularProvbHEXctrl- t_corr.angularProvbHEXctrl_HEX];
+%A = [t_corr.delta_ratio t_corr.temporalPole t_corr.temporalPole_HEX t_corr.angularProvbHEXctrl t_corr.angularProvbHEXctrl_HEX genders_logical];
+%A = [t_corr.controlAggressive-t_corr.HEXAggressive t_corr.temporalPole.*t_corr.angularProvbHEXctrl t_corr.temporalPole_HEX.*t_corr.angularProvbHEXctrl_HEX genders_logical];
+%A = [t_corr.temporalPole t_corr.angularProvbHEXctrl t_corr.temporalPole_HEX t_corr.angularProvbHEXctrl_HEX genders_logical t_corr.LHC t_corr.LHC_HEX categorical_HEX]; %this had 73.5% accuracy in linear SVM
+A = [t_corr.temporalPole t_corr.angularProvbHEXctrl t_corr.temporalPole_HEX t_corr.angularProvbHEXctrl_HEX genders_logical categorical_HEX]; %this had 73.5% accuracy in both linear SVM and linear discrimination
+A = [ genders_logical categorical_HEX]; %this had 73.5% accuracy in almost all models
+A = [t_corr.angularProvbHEXctrl t_corr.angularProvbHEXctrl_HEX categorical_HEX]; %this had 67.3% accuracy in cubic SVM
+A = [t_corr.temporalPole t_corr.temporalPole_HEX...
+     t_corr.angularProvbHEXctrl t_corr.angularProvbHEXctrl_HEX...
+     t_corr.Lamygdala t_corr.Lamygdala_HEX t_corr.LHC t_corr.LHC_HEX categorical_HEX]; %this had 67.3% accuracy in cubic SVM
+
+%shuffle results
+categorical_HEX_shuffled = categorical_HEX(randperm(length(categorical_HEX)));
+A = [t_corr.temporalPole t_corr.angularProvbHEXctrl t_corr.temporalPole_HEX t_corr.angularProvbHEXctrl_HEX categorical_HEX_shuffled]; %this had 67.3% accuracy incubic SVM
+
+%%
+
+for ii = 1:length(ROI_fq_means)
+    ind = find(contains(T_behavior.subjectID, ROI_fq_means(ii).subjectID,'IgnoreCase',true));
+    T_behavior{ind,9} = ROI_fq_means(ii).(ROIdujour).Means.MeanValues(1);
+    T_behavior{ind,10} = ROI_fq_means(ii).(ROIdujour).Means.MeanValues(2);
+end
+%%
+subj_range = 1:size(T_behavior,1);%1:25%26:size(T_behavior,1); 
+brain_region = [15 16;10 11;12 13]; 
+ROInames = {'Temporal Pole', 'LHC', 'L Amygdala'}
+
+%[rho,pval] = corr(t_corr{subj_range,brain_region(1)}-t_corr{subj_range,brain_region(2)},t_corr{subj_range,4}-t_corr{subj_range,7}, 'Type', 'Spearman')
+% figure,
+% scatter(t_corr{subj_range,brain_region(1)}-t_corr{subj_range,brain_region(2)},t_corr{subj_range,4}-t_corr{subj_range,7})
+% xlim([-3 3])
+% ylim([-3 3])
+% histogram(t_corr{subj_range,brain_region(1)}-t_corr{subj_range,brain_region(2)},20)
+% figure, histogram(t_corr{subj_range,4}-t_corr{subj_range,7},20)
+%%
+f = figure
+subplot(2,2,4)
+histogram(log(t_corr.(4)+1),30, 'EdgeColor', [1 1 1]); hold on
+histogram(log(t_corr.(7)+1),30, 'EdgeColor', [1 1 1]);
+legend('ratio HEX', 'ratio control')
+
+d = figure
+subplot(2,2,4)
+histogram(t_corr.(4)-t_corr.(7),30, 'EdgeColor', [1 1 1]); hold on
+legend('delta ratio: HEX - Control')
+
+for iii = 1:3
+brain_just = t_corr{t_corr.(8)~=0,brain_region(iii,1)}-(t_corr{t_corr.(8)~=0,brain_region(iii,2)});
+brain = (t_corr{t_corr.(8)~=0,brain_region(iii,1)}.*t_corr{t_corr.(8)~=0,14})-(t_corr{t_corr.(8)~=0,brain_region(iii,2)}.*t_corr{t_corr.(8)~=0,15});
+zbrain = zscore(brain);
+brain_cleaned_ind = find(abs(zbrain)>2);
+brain(brain_cleaned_ind) = NaN;
+
+brain_ROI_mean(:,iii) = brain;
+brain_ROI_Just_mean = brain_just;
+
+figure(f)
+subplot(2,2,iii)
+histogram(t_corr.(brain_region(iii,1)),30, 'EdgeColor', [1 1 1]); hold on
+histogram(t_corr.(brain_region(iii,2)),30, 'EdgeColor', [1 1 1]);
+legend('ratio HEX', 'ratio control')
+title(ROInames(iii))
+
+behavior = t_corr{t_corr.(8)~=0,7}-t_corr{t_corr.(8)~=0,4};
+
+figure(d)
+subplot(2,2,iii)
+histogram(t_corr.(brain_region(iii,1))-t_corr.(brain_region(iii,2)),30, 'EdgeColor', [1 1 1]); hold on
+legend('delta ratio: HEX - Control')
+title(ROInames(iii))
+
+[rho,pval] = corr(brain, behavior,'Type', 'Pearson', 'Rows', 'pairwise');
+figure, scatter(brain,behavior)
+%scatter(t_corr.(brain_region(1))-t_corr.(brain_region(2)),t_corr.(7)-t_corr.(4))
+hold on
+reg_line_color = [0 0 0];
+mdl = fitlm(brain, behavior);
+hlm = mdl.plot;
+hlm(1).Marker = 'none';
+hlm(2).Color = reg_line_color;
+hlm(3).Color = reg_line_color;
+hlm(4).Color = reg_line_color;
+title(ROInames(iii))
+stat_str = sprintf('r=%1.4f, p=%1.4f',rho,pval);
+    text(0, 0, stat_str);
+    xlabel('brain');ylabel('behavior')
+    
+    
+    %% bootstrap
+for ii = 1:10000
+    perm_vec = randperm(length(behavior));
+    behavior_shuffled = behavior(perm_vec);
+    [rho_shuffled_ROI(ii),pval_shuffled_ROI(ii)] = corr(brain, behavior_shuffled,'Type', 'Pearson', 'Rows', 'pairwise');
+end
+
+figure, histogram(rho_shuffled_ROI)
+hold on; scatter(rho,100,100,'r','*')
+
+sorted_BS_rho_ROI = sort(rho_shuffled_ROI, 'descend');
+sprintf('for %s p = %0.3f',ROInames{iii}, find(sorted_BS_rho_ROI<rho,1)/10000)
+    
+end
+%%
+% brain_ROI_mean = mean([(t_corr{t_corr.(4)~=0,brain_region(1,1)}.*t_corr{t_corr.(4)~=0,14})-(t_corr{t_corr.(4)~=0,brain_region(1,2)}.*t_corr{t_corr.(4)~=0,15})...
+%     (t_corr{t_corr.(4)~=0,brain_region(2,1)}.*t_corr{t_corr.(4)~=0,14})-(t_corr{t_corr.(4)~=0,brain_region(2,2)}.*t_corr{t_corr.(4)~=0,15})...
+%     (t_corr{t_corr.(4)~=0,brain_region(3,1)}.*t_corr{t_corr.(4)~=0,14})-(t_corr{t_corr.(4)~=0,brain_region(3,2)}.*t_corr{t_corr.(4)~=0,15})],2);
+
+zbrain_ROI_mean = nanmean(brain_ROI_mean,2);
+zbrain_ROI_Just_mean = nanmean(brain_ROI_Just_mean,2);
+[rho,pval] = corr(zbrain_ROI_mean, behavior,'Type', 'Pearson', 'Rows', 'pairwise');
+%[rho,pval] = corr(zbrain_ROI_Just_mean, behavior,'Type', 'Spearman', 'Rows', 'pairwise');
+
+figure, scatter(zbrain_ROI_mean,behavior,'filled')
+%scatter(t_corr.(brain_region(1))-t_corr.(brain_region(2)),t_corr.(7)-t_corr.(4))
+hold on
+reg_line_color = [0 0 0];
+mdl = fitlm(brain, behavior);
+hlm = mdl.plot;
+hlm(1).Marker = 'none';
+hlm(2).Color = reg_line_color;
+hlm(3).Color = reg_line_color;
+hlm(4).Color = reg_line_color;
+title('Composite')
+stat_str = sprintf('r=%1.4f, p=%1.4f',rho,pval);
+    text(0, 0, stat_str);
+    xlabel('brain');ylabel('behavior')
+%%
+brain_corr = corr([(t_corr{t_corr.(4)~=0,brain_region(1,1)}.*t_corr{t_corr.(4)~=0,14})-(t_corr{t_corr.(4)~=0,brain_region(1,2)}.*t_corr{t_corr.(4)~=0,15})...
+    (t_corr{t_corr.(4)~=0,brain_region(2,1)}.*t_corr{t_corr.(4)~=0,14})-(t_corr{t_corr.(4)~=0,brain_region(2,2)}.*t_corr{t_corr.(4)~=0,15})...
+    (t_corr{t_corr.(4)~=0,brain_region(3,1)}.*t_corr{t_corr.(4)~=0,14})-(t_corr{t_corr.(4)~=0,brain_region(3,2)}.*t_corr{t_corr.(4)~=0,15})]);
+
+%%
+figure, scatter(brain,behavior)
+%scatter(t_corr.(brain_region(1))-t_corr.(brain_region(2)),t_corr.(7)-t_corr.(4))
+hold on
+reg_line_color = [0 0 0];
+mdl = fitlm(brain, behavior);
+hlm = mdl.plot;
+hlm(1).Marker = 'none';
+hlm(2).Color = reg_line_color;
+hlm(3).Color = reg_line_color;
+hlm(4).Color = reg_line_color;
+title(ROInames(iii))
+stat_str = sprintf('r=%1.4f, p=%1.4f',rho,pval);
+    text(0, 0, stat_str);
+    xlabel('brain');ylabel('behavior')
+
+%% bootstrap
+for ii = 1:10000
+    perm_vec = randperm(length(behavior));
+    behavior_shuffled = behavior(perm_vec);
+    [rho_shuffled(ii),pval_shuffled(ii)] = corr(zbrain_ROI_mean, behavior_shuffled,'Type', 'Pearson', 'Rows', 'pairwise');
+end
+
+figure, histogram(rho__shuffled)
+hold on; scatter(rho,100,100,'r','*')
+
+sorted_BS_rho = sort(rho__shuffled, 'descend');
+find(sorted_BS_rho<rho,1)/10000
+
+
+%% Simple activation in PPI regions
+ROI_vec = [2 4 15 16]; %(ROI)%1:length
+for ROILoop = ROI_vec
+    ROIdujour = ROI{ROILoop} %which ROI to look at
+    %if ROILoop==15
+    query_files = dir(sprintf('/Volumes/sobel/evag/PSAP_fMRI/second_level/Visual_events_model_noTRskip/*.gfeat/cope2.feat/fq_%s/report.html',ROIdujour));
+    %else
+    %query_files = dir(sprintf('/Volumes/sobel/evag/PSAP_fMRI/second_level/PPI_Provocation_angular/*.gfeat/cope1.feat/fq_%s/report.html',ROIdujour));
+    %end
+    for query_files_loop = 1:length(query_files)
+        ROI_fq_means(query_files_loop).subjectID = GetSubjID(query_files(query_files_loop).folder);%get subjID
+        %ROI_fq_means(query_files_loop).(ROIdujour)
+        
+        filename = [query_files(query_files_loop).folder '/' query_files(query_files_loop).name];
+        filename = string(filename);
+        
+        ROI_fq_means(query_files_loop).(ROIdujour).Means = ParseResultsHtml(filename);
+    end
+    
+    %% plot
+    sz = 100;
+    figure
+    hold on
+    W_mean_HEX = NaN(49,1);W_mean_ctrl = NaN(49,1); M_mean_HEX = NaN(49,1); M_mean_ctrl = NaN(49,1);
+    
+    for ii = 1:length(ROI_fq_means)
+        
+        %detecting gender and coloe
+        Gcolor_logical = T1{find(contains(T1(:,1),ROI_fq_means(ii).subjectID, 'IgnoreCase',true)),2}=='m';
+        Gcolor_logical = Gcolor_logical+1; %men = 2 women = 1
+        Gcolor = genderColors(Gcolor_logical,:);
+        %plot
+        scatter(ROI_fq_means(ii).(ROIdujour).Means.MeanValues(1),ROI_fq_means(ii).(ROIdujour).Means.MeanValues(2),sz,Gcolor,'filled','MarkerFaceAlpha',0.8, 'MarkerEdgeColor', 'w')
+        %text(ROI_fq_means(ii).Means.MeanValues(1),ROI_fq_means(ii).Means.MeanValues(2),ROI_fq_means(ii).subjectID,'FontSize',8)
+        all(ii) = max(abs(ROI_fq_means(ii).(ROIdujour).Means.MeanValues));
+        if Gcolor_logical==1
+            W_mean_HEX(ii,1) = nanmean(ROI_fq_means(ii).(ROIdujour).Means.MeanValues(2));
+            W_mean_ctrl(ii,1) = nanmean(ROI_fq_means(ii).(ROIdujour).Means.MeanValues(1));
+        elseif Gcolor_logical==2
+            M_mean_HEX(ii,1) = nanmean(ROI_fq_means(ii).(ROIdujour).Means.MeanValues(2));
+            M_mean_ctrl(ii,1) = nanmean(ROI_fq_means(ii).(ROIdujour).Means.MeanValues(1));
+        end
+    end
+    maxall = max(all);
+    maxall = 1;
+    maxall = [-maxall maxall];
+    title(sprintf('mean activation for provocation in %s',ROIdujour))
+    xlabel('Control');ylabel('HEX')
+    xlim(maxall); ylim(maxall);
+    plot(maxall,maxall,':k')
+    
+    roi_mean = [W_mean_ctrl; W_mean_HEX;M_mean_ctrl; M_mean_HEX];
+    odor = [repmat(string('ctrl'), size(W_mean_ctrl));repmat(string('HEX'), size(W_mean_ctrl));repmat(string('ctrl'), size(W_mean_ctrl));repmat(string('HEX'), size(W_mean_ctrl))];
+    gender = [repmat("w", size(W_mean_ctrl)); repmat("w", size(W_mean_ctrl)); repmat("m", size(W_mean_ctrl)); repmat("m", size(W_mean_ctrl))];
+    odor(isnan(roi_mean)) = [];
+    gender(isnan(roi_mean)) = [];
+    roi_mean(isnan(roi_mean)) = [];
+    [p.(ROIdujour),tbl.(ROIdujour),stats.(ROIdujour)] = anovan(roi_mean, {odor, gender},'model','interaction');
+    stat_str = sprintf('odor p=%1.4f, gender p=%1.4f, interaction p=%1.4f',tbl.(ROIdujour){2,7}, tbl.(ROIdujour){3,7}, tbl.(ROIdujour){4,7});
+    text(-0.8, -0.8, stat_str);
+    
+    
+    axes('Position',[.7 .7 .2 .2])
+    box off
+    activation_means = [nanmean(W_mean_ctrl),nanmean(W_mean_HEX);nanmean(M_mean_ctrl), nanmean(M_mean_HEX)];
+    bar([0.99, 1.05], activation_means(1,:), 0.4, 'FaceColor', [genderColors(1,:)], 'EdgeColor','none'); hold on
+    bar([1.2, 1.26], activation_means(2,:), 0.4, 'FaceColor', [genderColors(2,:)], 'EdgeColor','none')
+    xticks([0.99, 1.05 1.2, 1.26])
+    xticklabels({'W Control', 'W HEX','M Control', 'M HEX'})
+    xtickangle(45)
+    figname = sprintf('/Users/eva/Box/PSAP_PTB/ROI_figs/PPI/%s',ROIdujour);
+    print(figname, '-dpng')%, '-d300')
+    clear W_mean_ctrl; clear W_mean_HEX; clear M_mean_ctrl; clear M_mean_HEX; clear roi_mean;
+    
+end
+

@@ -1,0 +1,120 @@
+function output = ParseResultsHtml(filename)
+
+%% Verify input
+if ~exist('filename', 'var')
+    error('Missing input variable filename');
+end
+
+if ~exist(filename, 'file')
+    error('Missing file in given filename: %s', filename);
+end
+
+%% Read data from file
+fileContents = fileread(filename);
+
+%% Get table string
+tableStart = strfind(fileContents, '<table');
+tableEnd = strfind(fileContents, '</table');
+
+if isempty(tableStart)
+    error('Not found table-start in file: %s', filename);
+elseif numel(tableStart) > 1
+    error('Found too many tables-starts in file: %s', filename);
+end
+
+if isempty(tableEnd)
+    error('Not found table-end in file: %s', filename);
+elseif numel(tableEnd) > 1
+    error('Found too many tables-end in file: %s', filename);
+end
+
+tableContents = fileContents(tableStart:tableEnd);
+
+%% Split table-contents to rows and columns, and take relevant rows
+tableRows = strsplit(tableContents, {'<tr>', '</tr>'});
+emptyRows = cellfun(@(str) numel(str) < 5, tableRows);
+tableRowsWithData = tableRows(~emptyRows);
+if or(numel(tableRowsWithData) ~= 5, numel(tableRowsWithData) ~= 4)
+    error('Found unexpected number of rows (%d) in table in file: %s', numel(tableRowsWithData)-1, filename);
+end
+    
+tableCells = cellfun(@(row) strsplit(row, {'<th>', '<th colspan=.>', '<td>'}, 'CollapseDelimiters', false, 'DelimiterType', 'RegularExpression'), tableRowsWithData, 'UniformOutput', false);
+numberOfCellsEachRow = cellfun(@numel, tableCells);
+
+superTitleRowIndex = numberOfCellsEachRow == 5; 
+titleRowIndex = numberOfCellsEachRow == 13;
+contentsRowsIndices = numberOfCellsEachRow == 16;
+
+if ~any(superTitleRowIndex)
+    error('Not found super-title-row in file: %s', filename);
+elseif sum(superTitleRowIndex) > 1
+    error('Found too many super-title-rows in file: %s', filename);
+end
+
+if ~any(titleRowIndex)
+    error('Not found title-row in file: %s', filename);
+elseif sum(titleRowIndex) > 1
+    error('Found too many title-rows in file: %s', filename);
+end
+
+if ~any(contentsRowsIndices)
+    error('Not found content-rows in file: %s', filename);
+elseif sum(contentsRowsIndices) ~= 2
+    error('Number of content-rows (%d) is unexpected in file: %s', sum(contentsRowsIndices), filename);
+end
+
+superTitleRow = tableCells{superTitleRowIndex};
+titleRow = tableCells{titleRowIndex};
+contentsRows = tableCells(contentsRowsIndices);
+
+%% Take mean-values
+meanColumnIndex = strcmp(titleRow, ' mean '); %mean
+if ~any(meanColumnIndex)
+    error('Not found mean-column in file: %s', filename);
+elseif sum(meanColumnIndex) > 1
+    error('Found too many mean-columns in file: %s', filename);
+end
+
+contentsInMeanColumnCells = cellfun(@(cellsContents) cellsContents{meanColumnIndex}, contentsRows, 'UniformOutput', false);
+meanValues = cellfun(@str2double, contentsInMeanColumnCells);
+
+%% Take number of voxels
+numberVoxelsIndex = strcmp(superTitleRow, ' # voxels ');
+if ~any(numberVoxelsIndex)
+    error('Not found number-of-voxels in file: %s', filename);
+elseif sum(numberVoxelsIndex) > 1
+    error('Found too many number-of-voxels in file: %s', filename);
+end
+
+contentsInNumberOfVoxelsCells = cellfun(@(cellsContents) cellsContents{numberVoxelsIndex}, contentsRows, 'UniformOutput', false);
+numberOfVoxels = cellfun(@str2double, contentsInNumberOfVoxelsCells);
+%% Take 90%-values
+meanColumnIndex = strcmp(titleRow, ' 90% ');
+if ~any(meanColumnIndex)
+    error('Not found mean-column in file: %s', filename);
+elseif sum(meanColumnIndex) > 1
+    error('Found too many mean-columns in file: %s', filename);
+end
+
+contentsInMeanColumnCells = cellfun(@(cellsContents) cellsContents{meanColumnIndex}, contentsRows, 'UniformOutput', false);
+percent90Values = cellfun(@str2double, contentsInMeanColumnCells);
+
+%% Take  max values
+meanColumnIndex = strcmp(titleRow, ' max ');
+if ~any(meanColumnIndex)
+    error('Not found mean-column in file: %s', filename);
+elseif sum(meanColumnIndex) > 1
+    error('Found too many mean-columns in file: %s', filename);
+end
+
+contentsInMeanColumnCells = cellfun(@(cellsContents) cellsContents{meanColumnIndex}, contentsRows, 'UniformOutput', false);
+maxValues = cellfun(@str2double, contentsInMeanColumnCells);
+
+%% Create output structure
+output = struct();
+output.Filename = filename;
+output.NumberOfVoxels = numberOfVoxels;
+output.MeanValues = meanValues;
+output.percent90Values = percent90Values;
+output.maxValues = maxValues;
+
