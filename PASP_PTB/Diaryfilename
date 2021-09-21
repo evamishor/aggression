@@ -1,0 +1,1063 @@
+filter for subject BJ955 completed (fileLoop = 1)
+filter for subject BM105 completed (fileLoop = 2)
+filter for subject CO827 completed (fileLoop = 3)
+filter for subject DA307 completed (fileLoop = 4)
+filter for subject DA667 completed (fileLoop = 5)
+filter for subject ED504 completed (fileLoop = 6)
+filter for subject FE925 completed (fileLoop = 7)
+filter for subject GL624 completed (fileLoop = 8)
+filter for subject HR595 completed (fileLoop = 9)
+filter for subject HS012 completed (fileLoop = 10)
+filter for subject IA871 completed (fileLoop = 11)
+filter for subject IE979 completed (fileLoop = 12)
+filter for subject JA593 completed (fileLoop = 13)
+filter for subject KA349 completed (fileLoop = 14)
+filter for subject KT923 completed (fileLoop = 15)
+filter for subject LA398 completed (fileLoop = 16)
+filter for subject LM679 completed (fileLoop = 17)
+filter for subject ML870 completed (fileLoop = 18)
+filter for subject RG783 completed (fileLoop = 19)
+filter for subject RN527 completed (fileLoop = 20)
+filter for subject RN803 completed (fileLoop = 21)
+filter for subject RY442 completed (fileLoop = 22)
+filter for subject SC258 completed (fileLoop = 23)
+filter for subject SE482 completed (fileLoop = 24)
+filter for subject SG582 completed (fileLoop = 25)
+filter for subject SK296 completed (fileLoop = 26)
+filter for subject SV761 completed (fileLoop = 27)
+filter for subject TC942 completed (fileLoop = 28)
+filter for subject TS533 completed (fileLoop = 29)
+filter for subject WA068 completed (fileLoop = 30)
+filter for subject ZM401 completed (fileLoop = 31)
+filter for subject bn369 completed (fileLoop = 32)
+filter for subject co678 completed (fileLoop = 33)
+filter for subject ly336 completed (fileLoop = 34)
+filter for subject m_AA989 completed (fileLoop = 35)
+filter for subject m_AB168 completed (fileLoop = 36)
+filter for subject m_AM720 completed (fileLoop = 37)
+filter for subject m_AO917 completed (fileLoop = 38)
+filter for subject m_DD711 completed (fileLoop = 39)
+filter for subject m_DL641 completed (fileLoop = 40)
+filter for subject m_FL993 completed (fileLoop = 41)
+filter for subject m_FV236 completed (fileLoop = 42)
+filter for subject m_HG421 completed (fileLoop = 43)
+filter for subject m_HS933 completed (fileLoop = 44)
+filter for subject m_JG862 completed (fileLoop = 45)
+filter for subject m_LY051 completed (fileLoop = 46)
+filter for subject m_RO731 completed (fileLoop = 47)
+filter for subject m_RS139 completed (fileLoop = 48)
+filter for subject m_TE596 completed (fileLoop = 49)
+filter for subject m_YM726 completed (fileLoop = 50)
+filter for subject m_ZE701 completed (fileLoop = 51)
+filter for subject m_ZM699 completed (fileLoop = 52)
+filter for subject m_fc771 completed (fileLoop = 53)
+filter for subject so199 completed (fileLoop = 54)
+filter for subject sz841 completed (fileLoop = 55)
+filter for subject w474 completed (fileLoop = 56)
+filter for subject wi527 completed (fileLoop = 57)
+filter for subject yy552 completed (fileLoop = 58)
+filter for subject zo094 completed (fileLoop = 59)
+
+normalizeToCalibration =
+
+     0
+
+Loading LabChart generated files for subject BJ955
+Loading LabChart generated files for subject BM105
+Loading LabChart generated files for subject CO827
+Loading LabChart generated files for subject DA307
+Loading LabChart generated files for subject DA667
+Loading LabChart generated files for subject ED504
+Loading LabChart generated files for subject FE925
+Loading LabChart generated files for subject GL624
+Loading LabChart generated files for subject HR595
+Loading LabChart generated files for subject HS012
+Loading LabChart generated files for subject IA871
+Loading LabChart generated files for subject IE979
+Loading LabChart generated files for subject JA593
+Loading LabChart generated files for subject KA349
+Loading LabChart generated files for subject KT923
+Loading LabChart generated files for subject LA398
+Loading LabChart generated files for subject LM679
+Loading LabChart generated files for subject ML870
+Loading LabChart generated files for subject RG783
+Loading LabChart generated files for subject RN527
+Loading LabChart generated files for subject RN803
+Loading LabChart generated files for subject RY442
+Loading LabChart generated files for subject SC258
+Loading LabChart generated files for subject SE482
+Loading LabChart generated files for subject SG582
+Loading LabChart generated files for subject SK296
+Loading LabChart generated files for subject SV761
+Loading LabChart generated files for subject TC942
+Loading LabChart generated files for subject TS533
+Loading LabChart generated files for subject WA068
+Loading LabChart generated files for subject ZM401
+Loading LabChart generated files for subject bn369
+Loading LabChart generated files for subject co678
+Loading LabChart generated files for subject ly336
+Loading LabChart generated files for subject m_AA989
+Loading LabChart generated files for subject m_AB168
+Loading LabChart generated files for subject m_AM720
+Loading LabChart generated files for subject m_AO917
+Loading LabChart generated files for subject m_DD711
+Loading LabChart generated files for subject m_DL641
+Loading LabChart generated files for subject m_FL993
+Loading LabChart generated files for subject m_FV236
+Loading LabChart generated files for subject m_HG421
+Loading LabChart generated files for subject m_HS933
+Loading LabChart generated files for subject m_JG862
+Loading LabChart generated files for subject m_LY051
+Loading LabChart generated files for subject m_RO731
+Loading LabChart generated files for subject m_RS139
+Loading LabChart generated files for subject m_TE596
+Loading LabChart generated files for subject m_YM726
+Loading LabChart generated files for subject m_ZE701
+Loading LabChart generated files for subject m_ZM699
+Loading LabChart generated files for subject m_fc771
+Loading LabChart generated files for subject so199
+Loading LabChart generated files for subject sz841
+Loading LabChart generated files for subject w474
+Loading LabChart generated files for subject wi527
+Loading LabChart generated files for subject yy552
+Loading LabChart generated files for subject zo094
+loaded 59 LabChart files in total
+Loading MATLAB generated files
+BJ955
+Loading MATLAB generated files
+CO827
+Loading MATLAB generated files
+DA307
+Loading MATLAB generated files
+DA667
+Loading MATLAB generated files
+FE925
+[Warning: Variable names were modified to make them valid MATLAB identifiers. The original names are saved in the VariableDescriptions
+property.] 
+Loading MATLAB generated files
+GL624
+Loading MATLAB generated files
+HR595
+Loading MATLAB generated files
+HS012
+Loading MATLAB generated files
+IA871
+Loading MATLAB generated files
+IE979
+Loading MATLAB generated files
+JA593
+Loading MATLAB generated files
+KA349
+Loading MATLAB generated files
+KT923
+Loading MATLAB generated files
+LA398
+Loading MATLAB generated files
+LM679
+Loading MATLAB generated files
+ML870
+Loading MATLAB generated files
+RG783
+Loading MATLAB generated files
+RN527
+Loading MATLAB generated files
+RN803
+Loading MATLAB generated files
+RY442
+Loading MATLAB generated files
+SC258
+Loading MATLAB generated files
+SE482
+Loading MATLAB generated files
+SG582
+Loading MATLAB generated files
+SK296
+Loading MATLAB generated files
+SV761
+Loading MATLAB generated files
+TC942
+[Warning: Variable names were modified to make them valid MATLAB identifiers. The original names are saved in the VariableDescriptions
+property.] 
+Loading MATLAB generated files
+TS533
+Loading MATLAB generated files
+WA068
+Loading MATLAB generated files
+ZM401
+Loading MATLAB generated files
+bn369
+Loading MATLAB generated files
+co678
+Loading MATLAB generated files
+ly336
+Loading MATLAB generated files
+m_AA989
+Loading MATLAB generated files
+m_AB168
+Loading MATLAB generated files
+m_AM720
+Loading MATLAB generated files
+m_AO917
+Loading MATLAB generated files
+m_DD711
+Loading MATLAB generated files
+m_DL641
+Loading MATLAB generated files
+m_FL993
+Loading MATLAB generated files
+m_FV236
+Loading MATLAB generated files
+m_HG421
+Loading MATLAB generated files
+m_HS933
+Loading MATLAB generated files
+m_JG862
+Loading MATLAB generated files
+m_LY051
+Loading MATLAB generated files
+m_RO731
+Loading MATLAB generated files
+m_RS139
+Loading MATLAB generated files
+m_TE596
+Loading MATLAB generated files
+m_YM726
+Loading MATLAB generated files
+m_ZE701
+Loading MATLAB generated files
+m_ZM699
+Loading MATLAB generated files
+m_fc771
+Loading MATLAB generated files
+so199
+Loading MATLAB generated files
+sz841
+Loading MATLAB generated files
+w474
+Loading MATLAB generated files
+wi527
+Loading MATLAB generated files
+yy552
+Loading MATLAB generated files
+zo094
+loaded 57 MATLAB files in total
+ind_nopress
+{Undefined function or variable 'ind_nopress'.
+} 
+subj_events
+{Undefined function or variable 'subj_events'.
+} 
+fileLoop = 1
+
+fileLoop =
+
+     1
+
+fileLoop=42
+
+fileLoop =
+
+    42
+
+filenames_temp = dir(sprintf('%s/*%s.csv',DirectoryEventsDataFolder,lower(Subject_info(fileLoop).subjectID))); %find the file that matches the subject
+{Undefined function or variable 'DirectoryEventsDataFolder'.
+} 
+DirectoryEventsDataFolder = '/Users/eva/Box/PSAP_PTB/data_to_analyze/fixed_events_TRs/';
+filenames_temp = dir(sprintf('%s/*%s.csv',DirectoryEventsDataFolder,lower(Subject_info(fileLoop).subjectID))); %find the file that matches the subject
+~isempty(filenames_temp)
+
+ans =
+
+  <a href="matlab:helpPopup logical" style="font-weight:bold">logical</a>
+
+   1
+
+[~,locs] =  findpeaks(Subject_info(fileLoop).OtherData.EventsTrigger,'MinPeakHeight',1); % checks the trigger channel, first peak should be first no press
+        locs_corrected  = locs>=Subject_info(fileLoop).PressureDATA.runs(1); 
+        locs(~locs_corrected) = [];
+        
+        subj_events = readtable([filenames_temp.folder '/' filenames_temp.name]); %load the event log (MATLAB output)
+        
+        % ind events
+        ind_nopress = string(subj_events{:,3})=='nopress'; %find indices according to the event log
+        
+        %taking only the last event
+        while sum(ind_nopress)>1
+            ind_nopress(find(ind_nopress, 1,'first')) = 0;
+        end
+new_StartTime = [subj_events{:,1}*1000+locs(1)-subj_events{ind_nopress,1}*1000]; %change times
+new_StartTime
+
+new_StartTime =
+
+   1.0e+07 *
+
+    9.5832
+    0.0000
+    0.0012
+    0.0024
+    0.0036
+    0.0051
+    0.0063
+    0.0075
+    0.0087
+    0.0099
+    0.0110
+    0.0122
+    0.0134
+    0.0146
+    0.0158
+    0.0994
+    0.1005
+    0.1021
+    0.1038
+    0.1059
+    0.1055
+    0.1072
+    0.1096
+    0.1089
+    0.1105
+    0.1122
+    0.1132
+    0.1142
+    0.1151
+    0.1171
+    0.1167
+    0.1179
+    0.1194
+    0.1188
+    0.1201
+    0.1216
+    0.1211
+    0.1224
+    0.1233
+    0.1243
+    0.1260
+    0.1276
+    0.1298
+    0.1292
+    0.1306
+    0.1328
+    0.1323
+    0.1336
+    0.1345
+    0.1366
+    0.1362
+    0.1381
+    0.1374
+    0.1389
+    0.1398
+    0.1407
+    0.1417
+    0.1427
+    0.1444
+    0.1460
+    0.1477
+    0.1687
+    0.1697
+    0.1720
+    0.1714
+    0.1728
+    0.1745
+    0.1761
+    0.1783
+    0.1778
+    0.1799
+    0.1791
+    0.1807
+    0.1816
+    0.1825
+    0.1835
+    0.1852
+    0.1875
+    0.1869
+    0.1889
+    0.1883
+    0.1897
+    0.1906
+    0.1915
+    0.1925
+    0.1946
+    0.1941
+    0.1954
+    0.1963
+    0.1973
+    0.1982
+    0.1999
+    0.2015
+    0.2036
+    0.2032
+    0.2044
+    0.2054
+    0.2063
+    0.2072
+    0.2089
+    0.2106
+    0.2123
+    0.2140
+    0.2157
+    0.2167
+    0.2601
+    0.2611
+    0.2628
+    0.2645
+    0.2662
+    0.2679
+    0.2696
+    0.2718
+    0.2713
+    0.2726
+    0.2736
+    0.2745
+    0.2760
+    0.2755
+    0.2768
+    0.2778
+    0.2788
+    0.2804
+    0.2797
+    0.2812
+    0.2822
+    0.2832
+    0.2848
+    0.2842
+    0.2856
+    0.2871
+    0.2866
+    0.2879
+    0.2903
+    0.2896
+    0.2911
+    0.2922
+    0.2932
+    0.2941
+    0.2958
+    0.2982
+    0.2975
+    0.2990
+    0.3000
+    0.3010
+    0.3019
+    0.3036
+    0.3053
+    0.3070
+    0.3087
+    0.3265
+    0.3276
+    0.3293
+    0.3310
+    0.3331
+    0.3327
+    0.3339
+    0.3349
+    0.3358
+    0.3372
+    0.3368
+    0.3380
+    0.3390
+    0.3399
+    0.3415
+    0.3409
+    0.3423
+    0.3433
+    0.3443
+    0.3460
+    0.3452
+    0.3468
+    0.3478
+    0.3488
+    0.3497
+    0.3514
+    0.3537
+    0.3531
+    0.3545
+    0.3555
+    0.3565
+    0.3575
+    0.3596
+    0.3592
+    0.3604
+    0.3613
+    0.3623
+    0.3632
+    0.3649
+    0.3666
+    0.3683
+    0.3700
+    0.3717
+    0.3734
+    0.3751
+
+
+normalizeToCalibration =
+
+     0
+
+Loading LabChart generated files for subject BJ955
+Loading LabChart generated files for subject BM105
+Loading LabChart generated files for subject CO827
+Loading LabChart generated files for subject DA307
+Loading LabChart generated files for subject DA667
+Loading LabChart generated files for subject ED504
+Loading LabChart generated files for subject FE925
+Loading LabChart generated files for subject GL624
+Loading LabChart generated files for subject HR595
+Loading LabChart generated files for subject HS012
+Loading LabChart generated files for subject IA871
+Loading LabChart generated files for subject IE979
+Loading LabChart generated files for subject JA593
+Loading LabChart generated files for subject KA349
+Loading LabChart generated files for subject KT923
+Loading LabChart generated files for subject LA398
+Loading LabChart generated files for subject LM679
+Loading LabChart generated files for subject ML870
+Loading LabChart generated files for subject RG783
+Loading LabChart generated files for subject RN527
+Loading LabChart generated files for subject RN803
+Loading LabChart generated files for subject RY442
+Loading LabChart generated files for subject SC258
+Loading LabChart generated files for subject SE482
+Loading LabChart generated files for subject SG582
+Loading LabChart generated files for subject SK296
+Loading LabChart generated files for subject SV761
+Loading LabChart generated files for subject TC942
+Loading LabChart generated files for subject TS533
+Loading LabChart generated files for subject WA068
+Loading LabChart generated files for subject ZM401
+Loading LabChart generated files for subject bn369
+Loading LabChart generated files for subject co678
+Loading LabChart generated files for subject ly336
+Loading LabChart generated files for subject m_AA989
+Loading LabChart generated files for subject m_AB168
+Loading LabChart generated files for subject m_AM720
+Loading LabChart generated files for subject m_AO917
+Loading LabChart generated files for subject m_DD711
+Loading LabChart generated files for subject m_DL641
+Loading LabChart generated files for subject m_FL993
+Loading LabChart generated files for subject m_FV236
+Loading LabChart generated files for subject m_HG421
+Loading LabChart generated files for subject m_HS933
+Loading LabChart generated files for subject m_JG862
+Loading LabChart generated files for subject m_LY051
+Loading LabChart generated files for subject m_RO731
+Loading LabChart generated files for subject m_RS139
+Loading LabChart generated files for subject m_TE596
+Loading LabChart generated files for subject m_YM726
+Loading LabChart generated files for subject m_ZE701
+Loading LabChart generated files for subject m_ZM699
+Loading LabChart generated files for subject m_fc771
+Loading LabChart generated files for subject so199
+Loading LabChart generated files for subject sz841
+Loading LabChart generated files for subject w474
+Loading LabChart generated files for subject wi527
+Loading LabChart generated files for subject yy552
+Loading LabChart generated files for subject zo094
+loaded 59 LabChart files in total
+Loading MATLAB generated files
+BJ955
+Loading MATLAB generated files
+CO827
+Loading MATLAB generated files
+DA307
+Loading MATLAB generated files
+DA667
+Loading MATLAB generated files
+FE925
+[Warning: Variable names were modified to make them valid MATLAB identifiers. The original names are saved in the VariableDescriptions
+property.] 
+Loading MATLAB generated files
+GL624
+Loading MATLAB generated files
+HR595
+Loading MATLAB generated files
+HS012
+Loading MATLAB generated files
+IA871
+Loading MATLAB generated files
+IE979
+Loading MATLAB generated files
+JA593
+Loading MATLAB generated files
+KA349
+Loading MATLAB generated files
+KT923
+Loading MATLAB generated files
+LA398
+Loading MATLAB generated files
+LM679
+Loading MATLAB generated files
+ML870
+Loading MATLAB generated files
+RG783
+Loading MATLAB generated files
+RN527
+Loading MATLAB generated files
+RN803
+Loading MATLAB generated files
+RY442
+Loading MATLAB generated files
+SC258
+Loading MATLAB generated files
+SE482
+Loading MATLAB generated files
+SG582
+Loading MATLAB generated files
+SK296
+Loading MATLAB generated files
+SV761
+Loading MATLAB generated files
+TC942
+[Warning: Variable names were modified to make them valid MATLAB identifiers. The original names are saved in the VariableDescriptions
+property.] 
+Loading MATLAB generated files
+TS533
+Loading MATLAB generated files
+WA068
+Loading MATLAB generated files
+ZM401
+Loading MATLAB generated files
+bn369
+Loading MATLAB generated files
+co678
+Loading MATLAB generated files
+ly336
+Loading MATLAB generated files
+m_AA989
+Loading MATLAB generated files
+m_AB168
+Loading MATLAB generated files
+m_AM720
+Loading MATLAB generated files
+m_AO917
+Loading MATLAB generated files
+m_DD711
+Loading MATLAB generated files
+m_DL641
+Loading MATLAB generated files
+m_FL993
+Loading MATLAB generated files
+m_FV236
+Loading MATLAB generated files
+m_HG421
+Loading MATLAB generated files
+m_HS933
+Loading MATLAB generated files
+m_JG862
+Loading MATLAB generated files
+m_LY051
+Loading MATLAB generated files
+m_RO731
+Loading MATLAB generated files
+m_RS139
+Loading MATLAB generated files
+m_TE596
+Loading MATLAB generated files
+m_YM726
+Loading MATLAB generated files
+m_ZE701
+Loading MATLAB generated files
+m_ZM699
+Loading MATLAB generated files
+m_fc771
+Loading MATLAB generated files
+so199
+Loading MATLAB generated files
+sz841
+Loading MATLAB generated files
+w474
+Loading MATLAB generated files
+wi527
+Loading MATLAB generated files
+yy552
+Loading MATLAB generated files
+zo094
+loaded 57 MATLAB files in total
+filter for subject BJ955 completed (fileLoop = 1)
+filter for subject BM105 completed (fileLoop = 2)
+filter for subject CO827 completed (fileLoop = 3)
+filter for subject DA307 completed (fileLoop = 4)
+filter for subject DA667 completed (fileLoop = 5)
+filter for subject ED504 completed (fileLoop = 6)
+filter for subject FE925 completed (fileLoop = 7)
+filter for subject GL624 completed (fileLoop = 8)
+filter for subject HR595 completed (fileLoop = 9)
+filter for subject HS012 completed (fileLoop = 10)
+filter for subject IA871 completed (fileLoop = 11)
+filter for subject IE979 completed (fileLoop = 12)
+filter for subject JA593 completed (fileLoop = 13)
+filter for subject KA349 completed (fileLoop = 14)
+filter for subject KT923 completed (fileLoop = 15)
+filter for subject LA398 completed (fileLoop = 16)
+filter for subject LM679 completed (fileLoop = 17)
+filter for subject ML870 completed (fileLoop = 18)
+filter for subject RG783 completed (fileLoop = 19)
+filter for subject RN527 completed (fileLoop = 20)
+filter for subject RN803 completed (fileLoop = 21)
+filter for subject RY442 completed (fileLoop = 22)
+filter for subject SC258 completed (fileLoop = 23)
+filter for subject SE482 completed (fileLoop = 24)
+filter for subject SG582 completed (fileLoop = 25)
+filter for subject SK296 completed (fileLoop = 26)
+filter for subject SV761 completed (fileLoop = 27)
+filter for subject TC942 completed (fileLoop = 28)
+filter for subject TS533 completed (fileLoop = 29)
+filter for subject WA068 completed (fileLoop = 30)
+filter for subject ZM401 completed (fileLoop = 31)
+filter for subject bn369 completed (fileLoop = 32)
+filter for subject co678 completed (fileLoop = 33)
+filter for subject ly336 completed (fileLoop = 34)
+filter for subject m_AA989 completed (fileLoop = 35)
+filter for subject m_AB168 completed (fileLoop = 36)
+filter for subject m_AM720 completed (fileLoop = 37)
+filter for subject m_AO917 completed (fileLoop = 38)
+filter for subject m_DD711 completed (fileLoop = 39)
+filter for subject m_DL641 completed (fileLoop = 40)
+filter for subject m_FL993 completed (fileLoop = 41)
+filter for subject m_FV236 completed (fileLoop = 42)
+filter for subject m_HG421 completed (fileLoop = 43)
+filter for subject m_HS933 completed (fileLoop = 44)
+filter for subject m_JG862 completed (fileLoop = 45)
+filter for subject m_LY051 completed (fileLoop = 46)
+filter for subject m_RO731 completed (fileLoop = 47)
+filter for subject m_RS139 completed (fileLoop = 48)
+filter for subject m_TE596 completed (fileLoop = 49)
+filter for subject m_YM726 completed (fileLoop = 50)
+filter for subject m_ZE701 completed (fileLoop = 51)
+filter for subject m_ZM699 completed (fileLoop = 52)
+filter for subject m_fc771 completed (fileLoop = 53)
+filter for subject so199 completed (fileLoop = 54)
+filter for subject sz841 completed (fileLoop = 55)
+filter for subject w474 completed (fileLoop = 56)
+filter for subject wi527 completed (fileLoop = 57)
+filter for subject yy552 completed (fileLoop = 58)
+filter for subject zo094 completed (fileLoop = 59)
+Loading events data for subject BJ955
+Failed to load events data for subject BM105
+fileLoop = 2
+Loading events data for subject CO827
+Loading events data for subject DA307
+Loading events data for subject DA667
+Loading events data for subject ED504
+Failed to load events data for subject FE925
+fileLoop = 7
+Loading events data for subject GL624
+Loading events data for subject HR595
+Loading events data for subject HS012
+Loading events data for subject IA871
+Loading events data for subject IE979
+Loading events data for subject JA593
+Loading events data for subject KA349
+Loading events data for subject KT923
+Loading events data for subject LA398
+Loading events data for subject LM679
+Failed to load events data for subject ML870
+fileLoop = 18
+Loading events data for subject RG783
+Loading events data for subject RN527
+Loading events data for subject RN803
+Loading events data for subject RY442
+Loading events data for subject SC258
+Loading events data for subject SE482
+Loading events data for subject SG582
+Loading events data for subject SK296
+Failed to load events data for subject SV761
+fileLoop = 27
+Loading events data for subject TC942
+Loading events data for subject TS533
+Failed to load events data for subject WA068
+fileLoop = 30
+Loading events data for subject ZM401
+Failed to load events data for subject bn369
+fileLoop = 32
+Failed to load events data for subject co678
+fileLoop = 33
+Failed to load events data for subject ly336
+fileLoop = 34
+Loading events data for subject m_AA989
+Loading events data for subject m_AB168
+Loading events data for subject m_AM720
+Loading events data for subject m_AO917
+Loading events data for subject m_DD711
+Loading events data for subject m_DL641
+Loading events data for subject m_FL993
+Loading events data for subject m_FV236
+Loading events data for subject m_HG421
+Loading events data for subject m_HS933
+Loading events data for subject m_JG862
+Loading events data for subject m_LY051
+Loading events data for subject m_RO731
+Failed to load events data for subject m_RS139
+fileLoop = 48
+Loading events data for subject m_TE596
+Loading events data for subject m_YM726
+Loading events data for subject m_ZE701
+Loading events data for subject m_ZM699
+Loading events data for subject m_fc771
+Loading events data for subject so199
+Loading events data for subject sz841
+Loading events data for subject w474
+Loading events data for subject wi527
+Failed to load events data for subject yy552
+fileLoop = 58
+Loading events data for subject zo094
+There are no events for subject BM105
+There are no events for subject FE925
+There are no events for subject ML870
+There are no events for subject SV761
+There are no events for subject WA068
+There are no events for subject bn369
+There are no events for subject co678
+There are no events for subject ly336
+There are no events for subject m_RS139
+There are no events for subject yy552
+49 out of 59 will be included in further analyses
+~24 percent of the subjects will be plotted
+normalizingPressesToCalibration,\n extrcting calibration events, normalizing and demeaning pressure
+z scoring subject BJ955
+There are no events for subject BM105
+z scoring subject CO827
+z scoring subject DA307
+z scoring subject DA667
+z scoring subject ED504
+There are no events for subject FE925
+z scoring subject GL624
+z scoring subject HR595
+z scoring subject HS012
+z scoring subject IA871
+z scoring subject IE979
+z scoring subject JA593
+z scoring subject KA349
+z scoring subject KT923
+z scoring subject LA398
+z scoring subject LM679
+There are no events for subject ML870
+z scoring subject RG783
+z scoring subject RN527
+z scoring subject RN803
+z scoring subject RY442
+z scoring subject SC258
+z scoring subject SE482
+z scoring subject SG582
+z scoring subject SK296
+There are no events for subject SV761
+z scoring subject TC942
+z scoring subject TS533
+There are no events for subject WA068
+z scoring subject ZM401
+There are no events for subject bn369
+There are no events for subject co678
+There are no events for subject ly336
+z scoring subject m_AA989
+z scoring subject m_AB168
+z scoring subject m_AM720
+z scoring subject m_AO917
+z scoring subject m_DD711
+z scoring subject m_DL641
+z scoring subject m_FL993
+z scoring subject m_FV236
+z scoring subject m_HG421
+z scoring subject m_HS933
+z scoring subject m_JG862
+z scoring subject m_LY051
+z scoring subject m_RO731
+There are no events for subject m_RS139
+z scoring subject m_TE596
+z scoring subject m_YM726
+z scoring subject m_ZE701
+z scoring subject m_ZM699
+z scoring subject m_fc771
+z scoring subject so199
+z scoring subject sz841
+z scoring subject w474
+z scoring subject wi527
+There are no events for subject yy552
+z scoring subject zo094
+close all
+Flipped subject TC942
+Flipped subject m_DL641
+Loading events data for subject BJ955
+Failed to load task events data for subject BM105
+fileLoop = 2
+Loading events data for subject CO827
+Loading events data for subject DA307
+Loading events data for subject DA667
+Loading events data for subject ED504
+Failed to load task events data for subject FE925
+fileLoop = 7
+Loading events data for subject GL624
+Loading events data for subject HR595
+Loading events data for subject HS012
+Loading events data for subject IA871
+Loading events data for subject IE979
+Loading events data for subject JA593
+Loading events data for subject KA349
+Loading events data for subject KT923
+Loading events data for subject LA398
+Loading events data for subject LM679
+Failed to load task events data for subject ML870
+fileLoop = 18
+Loading events data for subject RG783
+Loading events data for subject RN527
+Loading events data for subject RN803
+Loading events data for subject RY442
+Loading events data for subject SC258
+Loading events data for subject SE482
+Loading events data for subject SG582
+Loading events data for subject SK296
+Failed to load task events data for subject SV761
+fileLoop = 27
+Loading events data for subject TC942
+Loading events data for subject TS533
+Failed to load task events data for subject WA068
+fileLoop = 30
+Loading events data for subject ZM401
+Failed to load task events data for subject bn369
+fileLoop = 32
+Failed to load task events data for subject co678
+fileLoop = 33
+Failed to load task events data for subject ly336
+fileLoop = 34
+Loading events data for subject m_AA989
+Loading events data for subject m_AB168
+Loading events data for subject m_AM720
+Loading events data for subject m_AO917
+Loading events data for subject m_DD711
+Loading events data for subject m_DL641
+Loading events data for subject m_FL993
+Loading events data for subject m_FV236
+Loading events data for subject m_HG421
+Loading events data for subject m_HS933
+Loading events data for subject m_JG862
+Loading events data for subject m_LY051
+Loading events data for subject m_RO731
+Failed to load task events data for subject m_RS139
+fileLoop = 48
+Loading events data for subject m_TE596
+Loading events data for subject m_YM726
+Loading events data for subject m_ZE701
+Loading events data for subject m_ZM699
+Loading events data for subject m_fc771
+Loading events data for subject so199
+Loading events data for subject sz841
+Loading events data for subject w474
+Loading events data for subject wi527
+Failed to load task events data for subject yy552
+fileLoop = 58
+Loading events data for subject zo094
+ *   snipOUTevents_Zscored    *
+events_monetary: for subject BJ955 completed
+events_monetary: for subject CO827 completed
+events_monetary: for subject DA307 completed
+events_monetary: for subject DA667 completed
+events_monetary: for subject ED504 completed
+events_monetary: for subject GL624 completed
+events_monetary: for subject HR595 completed
+events_monetary: for subject HS012 completed
+events_monetary: for subject IA871 completed
+events_monetary: for subject IE979 completed
+events_monetary: for subject JA593 completed
+events_monetary: for subject KA349 completed
+events_monetary: for subject KT923 completed
+events_monetary: for subject LA398 completed
+events_monetary: for subject LM679 completed
+events_monetary: for subject RG783 completed
+events_monetary: for subject RN527 completed
+events_monetary: for subject RN803 completed
+events_monetary: for subject RY442 completed
+events_monetary: for subject SC258 completed
+events_monetary: for subject SE482 completed
+events_monetary: for subject SG582 completed
+events_monetary: for subject SK296 completed
+events_monetary: for subject TC942 completed
+events_monetary: for subject TS533 completed
+events_monetary: for subject ZM401 completed
+events_monetary: for subject m_AA989 completed
+event #111, L, in events_monetary for subject m_AB168 was cut by subject input
+event #111, R, in events_monetary for subject m_AB168 was cut by subject input
+event #112, L, in events_monetary for subject m_AB168 was cut by subject input
+event #112, R, in events_monetary for subject m_AB168 was cut by subject input
+event #112, events_monetary ended early for subject m_AB168
+event #113, L, in events_monetary for subject m_AB168 was cut by subject input
+event #113, R, in events_monetary for subject m_AB168 was cut by subject input
+event #113, events_monetary ended early for subject m_AB168
+Unable to perform assignment because the left and right sides have a different number of elements.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('snipOUTevents_Zscored', '/Users/eva/Box/PSAP_PTB/PSAP_PTB_exp/snipOUTevents_Zscored.m', 95)" style="font-weight:bold">snipOUTevents_Zscored</a> (<a href="matlab: opentoline('/Users/eva/Box/PSAP_PTB/PSAP_PTB_exp/snipOUTevents_Zscored.m',95,0)">line 95</a>)
+            latency_L(ii) = 2000 - I;
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('FCPSAP_Pressure_analyses', '/Users/eva/Box/PSAP_PTB/PSAP_PTB_exp/FCPSAP_Pressure_analyses.m', 113)" style="font-weight:bold">FCPSAP_Pressure_analyses</a> (<a href="matlab: opentoline('/Users/eva/Box/PSAP_PTB/PSAP_PTB_exp/FCPSAP_Pressure_analyses.m',113,0)">line 113</a>)
+snipOUTevents_Zscored %for zscored data - ****** I should copy everything I added here to the other snipOUTevents scripts!
+
+check_events_per_specific_subject
+fileLoop = 9
+
+fileLoop =
+
+     9
+
+fileLoop = 4
+
+fileLoop =
+
+     4
+
+fileLoop = 8
+
+fileLoop =
+
+     8
+
+Flipped subject GL624
+fileLoop = 19
+
+fileLoop =
+
+    19
+
+fileLoop = 36
+
+fileLoop =
+
+    36
+
+Subject_info(47).unnamed = 56;
+Subject_info(1).unnamed = [];
+Subject_info.unnamed = [];
+{Scalar structure required for this assignment.
+} 
+Subject_info(:).unnamed = [];
+{Expected one output from a curly brace or dot indexing expression, but there were 59 results.
+} 
+Subject_info(1).unnamed = [];
+Subject_info(1).unnamed = [];
+Subject_info(1).unnamed = [];
+clear Subject_info.unnamed
+fileLoop = 36
+
+fileLoop =
+
+    36
+
+fileLoop = 5
+
+fileLoop =
+
+     5
+
+figure, plot(Subject_info(fileLoop).PressureDATA.rawM
+ figure, plot(Subject_info(fileLoop).PressureDATA.rawM
+                                                      
+{Error: Invalid expression. When calling a function or indexing a variable, use parentheses. Otherwise, check for mismatched delimiters.
+} 
+figure, plot(Subject_info(fileLoop).PressureDATA.rawM)
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('tabular/plot', '/Applications/MATLAB_R2018b.app/toolbox/matlab/datatypes/@tabular/tabular.m', 195)" style="font-weight:bold">tabular/plot</a> (<a href="matlab: opentoline('/Applications/MATLAB_R2018b.app/toolbox/matlab/datatypes/@tabular/tabular.m',195,0)">line 195</a>)
+Tables and timetables do not have a plot method. To plot a table or a timetable, use the stackedplot function. As an alternative, extract
+table or timetable variables using dot or brace subscripting, and then pass the variables as input arguments to the plot function.
+} 
+figure, plot(Subject_info(fileLoop).PressureDATA.rawM(:,2:3))
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('tabular/plot', '/Applications/MATLAB_R2018b.app/toolbox/matlab/datatypes/@tabular/tabular.m', 195)" style="font-weight:bold">tabular/plot</a> (<a href="matlab: opentoline('/Applications/MATLAB_R2018b.app/toolbox/matlab/datatypes/@tabular/tabular.m',195,0)">line 195</a>)
+Tables and timetables do not have a plot method. To plot a table or a timetable, use the stackedplot function. As an alternative, extract
+table or timetable variables using dot or brace subscripting, and then pass the variables as input arguments to the plot function.
+} 
+figure, plot(Subject_info(fileLoop).PressureDATA.rawM{:,2:3})
+diary off
